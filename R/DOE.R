@@ -27,8 +27,8 @@ bloc<- paste0("B",str_pad(1:bloc_nb,nchar(bloc_nb),side="left",pad="0"))
 a<-expand.grid(bloc,MP)
 colnames(a)<- c("bloc","MP")
 set.seed(nombre)
-
 a$alea_gde_parcelle<- abs(rnorm(nrow(a),mean=10,sd=100))
+a <- data.table(a)
 setDT(a)[, MP_nb := frank(alea_gde_parcelle,ties.method="first"), by=bloc]
 a2 <- a[,-3]
 
@@ -36,6 +36,7 @@ b <-expand.grid(bloc,MP,SP)
 colnames(b)<- c("bloc","MP","SP")
 set.seed(nombre)
 b$alea_pte_parcelle<- rnorm(nrow(b),mean=10,sd=100)
+b <- data.table(b)
 setDT(b)[, SP_nb := frank(alea_pte_parcelle,ties.method="first"), by=c("bloc","MP")]
 b2 <- b[,-4]
 
